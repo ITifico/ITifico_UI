@@ -108,56 +108,6 @@ const BlogArticles = () => {
     }
   }, [location]);
 
-  useEffect(() => {
-    startTransition(() => {
-      if (!isLoading) {
-        let cloneArticles = [...articlesList?.data];
-
-        if (filter.length) {
-          if (filter.includes(t("blog_sort_new"))) {
-            cloneArticles = cloneArticles.sort((first, next) => {
-              return +new Date(next.date) - +new Date(first.date);
-            });
-          }
-          if (filter.includes(t("blog_sort_view"))) {
-            cloneArticles = cloneArticles.sort((first, next) => {
-              return +next.views - +first.views;
-            });
-          }
-        } else {
-          cloneArticles = cloneArticles.sort((first, next) => {
-            return +new Date(next.date) - +new Date(first.date);
-          });
-        }
-
-        if (tagFilter) {
-          cloneArticles = cloneArticles.filter((article) => {
-            let tagNames = article.tags.map((tag) => tag.name);
-            return tagNames.includes(tagFilter);
-          });
-        }
-
-        setArticles([...cloneArticles]);
-
-        let sortedArticles = [];
-        cloneArticles?.map((a, i) =>
-          Math.ceil((i + 1) / articlesPerPage) === pagination
-            ? sortedArticles.push(a)
-            : a
-        );
-        setPageArticles(sortedArticles);
-      }
-    });
-  }, [
-    tagFilter,
-    filter,
-    isLoading,
-    articlesList,
-    articlesPerPage,
-    pagination,
-    t,
-  ]);
-
   // changing pagination
   const onChangePagination = (e) => {
     if (!e.target.textContent) return;

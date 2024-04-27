@@ -65,7 +65,9 @@ const ArticleSlider = () => {
   useEffect(() => {
     if (!isLoading) {
       let arr = articleList?.data.slice(0, 7);
-      setArticles([...arr]);
+      if (arr?.length) {
+        setArticles([...arr]);
+      }
     }
   }, [isLoading, articleList]);
 

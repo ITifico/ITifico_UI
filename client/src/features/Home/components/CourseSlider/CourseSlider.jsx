@@ -56,7 +56,9 @@ const CourseSlider = () => {
   useEffect(() => {
     if (!isLoading) {
       let arr = courseList?.data.slice(0, 4);
-      setCourses([...arr]);
+      if (arr?.length) {
+        setCourses([...arr]);
+      }
     }
   }, [isLoading, courseList]);
 
@@ -91,7 +93,7 @@ const CourseSlider = () => {
       >
         {isLoading ? (
           <Loader />
-        ) : courses.length ? (
+        ) : courses?.length ? (
           <>
             {courses.map((course, idx) => (
               <SwiperSlide key={idx + "article"}>
